@@ -1,24 +1,17 @@
-# vue_shop
+# learnVue
 
-## Project setup
-```
-yarn install
-```
+记录 vue 学习
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+电商后台管理系统技术选型
+vue
+vue-router
+element-UI
+axios
+echarts
 
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+后端技术选型
+node
+express
+JWT
+mySQL
+sequelize
