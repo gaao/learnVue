@@ -1,9 +1,10 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Router from 'vue-router'
 // import HomeView from '../views/HomeView.vue'
 import logIn from '../components/logIn.vue'
+import Home from '../components/Home.vue'
 
-Vue.use(VueRouter)
+Vue.use(Router)
 
 // const routes = [
 //   {
@@ -20,19 +21,35 @@ Vue.use(VueRouter)
 //     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
 //   }
 // ]
-const routes = [
-  {
-    path: '/',
-    // name: logIn,
-    redirect: '/login'
-  },
-  {
-    path: '/login',
-    // name: logIn,
-    component: logIn
-  }
-]
-
-export default new VueRouter({
-  routes
+const router = new Router({
+  routes: [
+    {
+      path: '/',
+      // name: logIn,
+      redirect: '/login'
+    },
+    {
+      path: '/login',
+      // name: logIn,
+      component: logIn
+    },
+    {
+      path: '/home',
+      // name: home,
+      component: Home
+    }
+  ]
 })
+
+// 挂载导航守卫
+router.beforeEach((to, from, next) => {
+  const tokenVal = window.sessionStorage.getItem('token')
+  if (to.path === '/login') {
+    return next()
+  } else if (!tokenVal) {
+    return next('/login')
+  }
+  next()
+})
+
+export default router

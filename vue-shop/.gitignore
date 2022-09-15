@@ -1,8 +1,9 @@
 .DS_Store
-.history
 node_modules
 /dist
 
+# ignore all the .history dir including subdir
+.history/
 
 # local env files
 .env.local
