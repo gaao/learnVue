@@ -1,8 +1,16 @@
 .DS_Store
+<<<<<<< HEAD
 .history
 node_modules
 /dist
 
+=======
+node_modules
+/dist
+
+# ignore all the .history dir including subdir
+.history/
+>>>>>>> login
 
 # local env files
 .env.local
