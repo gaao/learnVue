@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      homezujian
+      home 组件
     </div>
     <el-button type="info" @click="logout">退出</el-button>
   </div>
