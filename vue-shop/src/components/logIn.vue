@@ -3,7 +3,7 @@
     <div class="loginbox">
       <!-- 头像区域 -->
       <div class="avatarbox">
-        <img src="../assets/logo.png" alt="logo">
+        <img src="../assets/img/logo_red.png" alt="logo">
         <div class="username"></div>
         <div class="password"></div>
       </div>
