@@ -4,6 +4,8 @@ node_modules
 
 # ignore all the .history dir including subdir
 .history/
+.history
+/.history
 
 # local env files
 .env.local
