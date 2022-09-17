@@ -316,12 +316,5 @@ export default {
 
 </script>
 <style lang="less" scoped>
-.el-table {
-  margin: 16px 0;
-}
 
-.el-pagination {
-  float: right;
-  margin-bottom: 16px;
-}
 </style>

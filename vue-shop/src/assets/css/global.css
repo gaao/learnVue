@@ -15,9 +15,27 @@ body,
 .el-card {
   box-shadow: 0 8px 12px rgba(93, 88, 108, 0.03) !important;
 }
+
 .el-card__body {
   padding: 16px;
 }
+
 .el-dialog__footer {
   border-top: 1px solid #DCDFE6;
 }
+
+.el-table {
+  margin: 16px 0;
+}
+
+.el-pagination {
+  float: right;
+  margin-bottom: 16px;
+}
+/* 优化级联选择器展开过高问题 */
+.el-cascader-menu {
+  max-height: 90vh;
+ }
+ .el-cascader {
+  width: 100%;
+ }
