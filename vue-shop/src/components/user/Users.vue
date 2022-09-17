@@ -30,12 +30,12 @@
             <el-switch v-model="scope.row.mg_state" @change="uesrStateChange(scope.row)"></el-switch>
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="操作" width="200">
+        <el-table-column fixed="right" label="操作" width="200px">
           <template slot-scope="scope">
             <el-button type="text" size="small" icon="el-icon-edit" @click="showEditDilog(scope.row)">编辑</el-button>
             <el-button type="text" size="small" icon="el-icon-delete" @click="deleteDilog(scope.row)">删除</el-button>
             <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
-              <el-button type="text" size="small" icon="el-icon-setting">设置</el-button>
+              <el-button type="text" size="small" icon="el-icon-setting" @click="setRole(scope.row)">设置</el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -85,6 +85,24 @@
       <span slot="footer">
         <el-button @click="editDilogVisible = false">取 消</el-button>
         <el-button type="primary" @click="editUser">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <!-- 分配角色对话框 -->
+    <el-dialog title="分配角色" :visible.sync="setRoleDilogVisible">
+      <div>
+        <p>当前的用户：{{this.uesrInfo.username}}</p>
+        <p>当前的角色：{{this.uesrInfo.role_name}}</p>
+        <p>分配的角色：
+          <el-select v-model="selectRole" placeholder="请选择" :change="changeRole">
+            <el-option v-for="item in roleList" :key="item.id" :label="item.roleName" :value="item.id">
+            </el-option>
+          </el-select>
+        </p>
+      </div>
+      <span slot="footer">
+        <el-button @click="setRoleDilogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveUserRole">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -154,7 +172,15 @@ export default {
         username: '',
         email: '',
         mobile: ''
-      }
+      },
+      // 分配角色
+      setRoleDilogVisible: false,
+      // 分配角色的用户信息
+      uesrInfo: '',
+      // 分配角色可选列表
+      roleList: [],
+      // 分配的一个角色
+      selectRole: ''
     }
   },
   created() {
@@ -255,6 +281,35 @@ export default {
           message: '已取消删除'
         })
       })
+    },
+    // 分配角色
+    async setRole(row) {
+      console.log('row', row)
+      this.uesrInfo = row
+      // 在展示对话框之前获取所有用户角色
+      const { data: res } = await this.$http.get('roles')
+      console.log('res', res)
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.msg)
+      }
+      this.roleList = res.data
+      this.setRoleDilogVisible = true
+    },
+    changeRole() {
+
+    },
+    async saveUserRole() {
+      console.log('role', this.selectRole)
+      if (!this.selectRole) {
+        return this.$message.error('请选择要修改的角色')
+      }
+      const { data: res } = await this.$http.put(`users/${this.uesrInfo.id}/role`, { rid: this.selectRole })
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.msg)
+      }
+      this.getuserList()
+      this.setRoleDilogVisible = false
+      this.$message.success(res.meta.msg)
     }
   }
 }
