@@ -6,7 +6,7 @@
       <el-breadcrumb-item>角色列表</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card>
-      <el-button type="primary">添加角色</el-button>
+      <el-button type="primary" @click="showRolseDialog('','add')">添加角色</el-button>
       <el-table :data="rolesList" border stripe>
         <!-- 展开 -->
         <el-table-column type="expand">
@@ -40,8 +40,9 @@
         <el-table-column prop="roleDesc" label="描述"></el-table-column>
         <el-table-column label="操作" width="200px">
           <template slot-scope="scope">
-            <el-button type="text" size="small" icon="el-icon-edit" @click="showEditDilog(scope.row)">编辑</el-button>
-            <el-button type="text" size="small" icon="el-icon-delete" @click="deleteDilog(scope.row)">删除</el-button>
+            <el-button type="text" size="small" icon="el-icon-edit" @click="showRolseDialog(scope.row,'edit')">编辑
+            </el-button>
+            <el-button type="text" size="small" icon="el-icon-delete" @click="deleteRole(scope.row)">删除</el-button>
             <el-tooltip effect="dark" content="分配权限" placement="top" :enterable="false">
               <el-button type="text" size="small" icon="el-icon-setting" @click="showSetRightDilog(scope.row)">分配权限
               </el-button>
@@ -50,6 +51,21 @@
         </el-table-column>
       </el-table>
     </el-card>
+
+    <!-- 添加\编辑角色对话框 -->
+    <el-dialog :title="roleDialogTitle +'角色'" :visible.sync="addAndEditRolseVisible">
+      <div>
+        <p>角色名称：<el-input v-model="roleInfo.roleName" placeholder="请输入角色名称"></el-input>
+        </p>
+        <p>角色描述：<el-input v-model="roleInfo.roleDesc" placeholder="请输入角色描述"></el-input>
+        </p>
+      </div>
+      <span slot="footer">
+        <el-button @click="setRightDilogVisible = false">取 消</el-button>
+        <el-button v-if="roleDialogType === 'add'" type="primary" @click="setAddRolse">确 定</el-button>
+        <el-button v-if="roleDialogType === 'edit'" type="primary" @click="setEditRolse">确 定</el-button>
+      </span>
+    </el-dialog>
 
     <!-- 分配权限对话框 -->
     <el-dialog title="分配权限" :visible.sync="setRightDilogVisible" @close="setRightDilogClosed">
@@ -68,6 +84,16 @@
 export default {
   data() {
     return {
+      // 添加角色
+      addAndEditRolseVisible: false,
+      roleDialogTitle: '',
+      roleDialogType: '',
+      // 添加角色的信息
+      roleInfo: {
+        roleId: '',
+        roleName: '',
+        roleDesc: ''
+      },
       rolesList: [],
       // 控制分配权限对话框展示
       setRightDilogVisible: false,
@@ -88,6 +114,7 @@ export default {
     this.getRolesList()
   },
   methods: {
+    // 获取列表
     async getRolesList() {
       const { data: res } = await this.$http.get('roles')
       console.log('res', res)
@@ -96,8 +123,56 @@ export default {
       }
       this.rolesList = res.data
     },
-    showEditDilog() { },
-    deleteDilog() { },
+    // 添加、编辑角色
+    showRolseDialog(row, type) {
+      if (type === 'add') {
+        this.roleDialogTitle = '添加'
+      } else if (type === 'edit') {
+        this.roleDialogTitle = '编辑'
+        this.roleInfo.roleName = row.roleName
+        this.roleInfo.roleDesc = row.roleDesc
+      }
+      this.roleInfo.roleId = row.id
+      this.roleDialogType = type
+      this.addAndEditRolseVisible = true
+    },
+    async setAddRolse() {
+      const { data: res } = await this.$http.post('roles', { roleName: this.roleInfo.roleName, roleDesc: this.roleInfo.roleDesc })
+      if (res.meta.status !== 201) {
+        return this.$message.error(res.meta.msg)
+      }
+      this.addAndEditRolseVisible = false
+      this.getRolesList()
+      this.$message.success(res.meta.msg)
+    },
+    async setEditRolse() {
+      const { data: res } = await this.$http.put(`roles/${this.roleInfo.roleId}`, { roleName: this.roleInfo.roleName, roleDesc: this.roleInfo.roleDesc })
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.msg)
+      }
+      this.addAndEditRolseVisible = false
+      this.getRolesList()
+      this.$message.success(res.meta.msg)
+    },
+    // 删除角色
+    async deleteRole(row) {
+      console.log('row', row)
+      const confirmResult = await this.$confirm('此操作将永久删除该角色，是否继续？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).catch((error) => { console.log('error', error) })
+      if (confirmResult !== 'confirm') {
+        return this.$message.info('取消了删除')
+      }
+      console.log('确认了删除')
+      const { data: res } = await this.$http.delete(`roles/${row.id}`)
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.msg)
+      }
+      this.getRolesList()
+      this.$message.success(res.meta.msg)
+    },
     // 根据 ID 删除权限
     async removeRightById(role, rightId) {
       const confirmResult = await this.$confirm('此操作将永久删除该权限，是否继续？', '提示', {
@@ -169,6 +244,10 @@ export default {
   display: flex;
   align-items: center;
   background-color: #f6f7fa;
+}
+
+.el-table {
+  margin-top: 16px;
 }
 
 // /deep/.el-table__cell /deep/.el-table__expanded-cell {
