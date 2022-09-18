@@ -6,13 +6,13 @@
         <img src="../assets/img/logo_white.png" alt="logo">
         <span>后台管理系统</span>
       </div>
-      <el-button type="info" @click="logout">退出</el-button>
+      <el-button size="mini" type="info" @click="logout">退出</el-button>
     </el-header>
     <el-container>
       <!-- 侧边栏 -->
       <el-aside :width="isCollapse ? '64px' : '200px'">
-        <el-menu class="menu" background-color="#fff" active-text-color="#00ff00" unique-opened :collapse="isCollapse"
-          :collapse-transition="false" router :default-active="activeIndex">
+        <el-menu class="menu" background-color="#fff" unique-opened :collapse="isCollapse" :collapse-transition="false"
+          router :default-active="activeIndex">
           <el-submenu v-for="item in menulist" :index="item.id + ''" :key="item.id">
             <template slot="title">
               <i :class="iconobj[item.id]"></i>
@@ -91,15 +91,14 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 8px;
 
   >div {
     display: flex;
     align-items: center;
 
     img {
-      width: 70px;
-      height: 48px;
+      width: 52.36px;
+      height: 36px;
     }
 
     span {

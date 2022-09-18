@@ -6,7 +6,7 @@
       <el-breadcrumb-item>商品分类</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card>
-      <el-button type="" @click="showCateDialog('','add')">添加分类</el-button>
+      <el-button type="primary" @click="showCateDialog('','add')" plain>添加分类</el-button>
       <tree-table :data="cateList" :columns="columns" :selection-type="false" :expand-type="false" show-index border>
         <template slot="isOK" slot-scope="scope">
           <i class="el-icon-success isok" v-if="scope.row.cat_deleted === false"
@@ -14,9 +14,9 @@
           <i class="el-icon-error isok" v-else style="width: 18px; height: 18px;color: #ff9800;"></i>
         </template>
         <template slot="order" slot-scope="scope">
-          <el-tag type="" v-if="scope.row.cat_level === 0">一级</el-tag>
-          <el-tag type="success" v-if="scope.row.cat_level === 1">二级</el-tag>
-          <el-tag type="warning" v-if="scope.row.cat_level === 2">三级</el-tag>
+          <el-tag type="" v-if="scope.row.cat_level === 0" effect="plain">一级</el-tag>
+          <el-tag type="success" v-if="scope.row.cat_level === 1" effect="plain">二级</el-tag>
+          <el-tag type="warning" v-if="scope.row.cat_level === 2" effect="plain">三级</el-tag>
         </template>
         <template slot="option" slot-scope="scope">
           <el-button type="text" icon="el-icon-edit" @click="showCateDialog(scope.row,'edit')">编辑</el-button>
