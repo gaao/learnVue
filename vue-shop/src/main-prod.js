@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import './plugins/element.js'
+// import './plugins/element.js'
 // 树形结构表格
 import ZkTable from 'vue-table-with-tree-grid'
 // 富文本编辑器
@@ -12,7 +12,7 @@ import 'quill/dist/quill.bubble.css' // for bubble theme
 
 // 顶部进度条
 import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
+// import 'nprogress/nprogress.css'
 
 import './assets/fonts/iconfont.css'
 
