@@ -21,12 +21,14 @@
       <!-- 用户列表 -->
       <el-table :data="goodsList" border>
         <el-table-column type="index" label="序号"></el-table-column>
-        <el-table-column prop="goods_name" label="商品名称"></el-table-column>
+        <el-table-column prop="goods_name" label="商品名称" width="300px"></el-table-column>
         <el-table-column prop="goods_price" label="商品价格"></el-table-column>
         <el-table-column prop="goods_weight" label="商品重量"></el-table-column>
         <el-table-column prop="goods_state" label="商品状态"></el-table-column>
-        <el-table-column prop="add_time" label="添加时间"></el-table-column>
-        <el-table-column fixed="right" label="操作">
+        <el-table-column prop="add_time" label="添加时间" width="110px">
+          <template slot-scope="scope">{{scope.row.add_time |filterTime}}</template>
+        </el-table-column>
+        <el-table-column fixed="right" label="操作" width="120px">
           <template slot-scope="scope">
             <el-button type="text" size="small" icon="el-icon-edit" @click="showGoodsDialog(scope.row,'edit')">编辑
             </el-button>
