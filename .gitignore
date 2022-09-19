@@ -1,6 +1,5 @@
 .DS_Store
 node_modules
-/dist
 
 # ignore all the .history dir including subdir
 .history/
