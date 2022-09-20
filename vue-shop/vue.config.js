@@ -1,6 +1,6 @@
 const path = require("path")
 module.exports = {
-  publicPath: './',
+  publicPath: process.env.BASE_URL || "",
   chainWebpack: config => {
     // 发布模式
     config.when(process.env.NODE_ENV === 'production', config => {

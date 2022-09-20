@@ -1,6 +1,6 @@
 # learnVue
 
-githubPage 使用页面 不需要和其他分支同步，只需要在主分支打包后 dist 文件复制过来即可
+githubPage 使用页面 主分支 merge 过来后，运行 build 打包，只需要在主分支打包后 dist 文件内内容复制到 docs（需要在根目录创建一个文件）即可
 
 记录 vue 学习
 
