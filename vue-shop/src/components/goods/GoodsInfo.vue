@@ -2,66 +2,66 @@
   <div>
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>商品管理</el-breadcrumb-item>
-      <el-breadcrumb-item>商品列表</el-breadcrumb-item>
+      <el-breadcrumb-item>产品管理</el-breadcrumb-item>
+      <el-breadcrumb-item>产品列表</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card>
-      <el-alert :title="alertTite+'商品信息'" type="warning" :closable="false">
+      <el-alert :title="alertTite+'产品信息'" type="warning" :closable="false">
       </el-alert>
       <el-steps :active="stepActive-0" finish-status="success" align-center>
         <el-step title="基本信息"> </el-step>
-        <el-step title="商品参数"></el-step>
-        <el-step title="商品属性"></el-step>
-        <el-step title="商品图片"></el-step>
-        <el-step title="商品内容"></el-step>
+        <el-step title="产品参数"></el-step>
+        <el-step title="产品属性"></el-step>
+        <el-step title="产品图片"></el-step>
+        <el-step title="产品内容"></el-step>
         <el-step title="完成"></el-step>
       </el-steps>
       <el-form :model="goodsForm" :rules="goodsFormRules" ref="goodsFormRef" label-position="top">
         <el-tabs v-model="stepActive" tab-position="left" :before-leave="beforeTabLeave" @tab-click="tabClicked">
           <el-tab-pane label="基本信息" name="0">
-            <el-form-item label="商品名称" prop="goods_name">
-              <el-input v-model="goodsForm.goods_name" placeholder="请输入商品名称"></el-input>
+            <el-form-item label="产品名称" prop="goods_name">
+              <el-input v-model="goodsForm.goods_name" placeholder="请输入产品名称"></el-input>
             </el-form-item>
-            <el-form-item label="商品价格" prop="goods_price">
-              <el-input v-model="goodsForm.goods_price" placeholder="请输入商品价格"></el-input>
+            <el-form-item label="产品价格" prop="goods_price">
+              <el-input v-model="goodsForm.goods_price" placeholder="请输入产品价格"></el-input>
             </el-form-item>
-            <el-form-item label="商品重量" prop="goods_weight">
-              <el-input v-model="goodsForm.goods_weight" placeholder="请输入商品重量"></el-input>
+            <el-form-item label="产品重量" prop="goods_weight">
+              <el-input v-model="goodsForm.goods_weight" placeholder="请输入产品重量"></el-input>
             </el-form-item>
-            <el-form-item label="商品数量" prop="goods_number">
-              <el-input v-model="goodsForm.goods_number" placeholder="请输入商品数量"></el-input>
+            <el-form-item label="产品数量" prop="goods_number">
+              <el-input v-model="goodsForm.goods_number" placeholder="请输入产品数量"></el-input>
             </el-form-item>
-            <el-form-item label="商品分类" prop="goods_cat">
-              <!-- <el-select v-model="goodsForm.goods_cat" placeholder="请输入商品分类">>
+            <el-form-item label="产品分类" prop="goods_cat">
+              <!-- <el-select v-model="goodsForm.goods_cat" placeholder="请输入产品分类">>
                 <el-option :label="" :value=""></el-option>
               </el-select> -->
               <el-cascader v-model="goodsForm.goods_cat" :options="cateList" :props="cateProps" @change="handleChange">
               </el-cascader>
             </el-form-item>
           </el-tab-pane>
-          <el-tab-pane label="商品参数" name="1">
+          <el-tab-pane label="产品参数" name="1">
             <el-form-item v-for="item in manyTableDate" :label="item.attr_name" :key="item.attr_id">
               <el-checkbox-group v-model="item.attr_vals">
                 <el-checkbox v-for="(val,i) in item.attr_vals" :label="val" :key="i" border></el-checkbox>
               </el-checkbox-group>
             </el-form-item>
           </el-tab-pane>
-          <el-tab-pane label="商品属性" name="2">
+          <el-tab-pane label="产品属性" name="2">
             <el-form-item v-for="(item) in onlyTableDate" :label="item.attr_name" :key="item.attr_id">
               <el-input v-model="item.attr_vals" :placeholder="'请输入'+item.attr_name"></el-input>
             </el-form-item>
           </el-tab-pane>
-          <el-tab-pane label="商品图片" name="3">
+          <el-tab-pane label="产品图片" name="3">
             <el-upload :action="upLodaUrl" :on-preview="handlePreview" :on-remove="handleRemove" :file-list="fileList"
               list-type="picture" :headers="headerObj" :on-success="handleSuccess">
               <el-button size="small" type="primary">点击上传</el-button>
               <!-- <div slot="tip">只能上传 jpg/png 文件，且不超过 500kb</div> -->
             </el-upload>
           </el-tab-pane>
-          <el-tab-pane label="商品内容" name="4">
+          <el-tab-pane label="产品内容" name="4">
             <quill-editor v-model="goodsForm.goods_introduce"></quill-editor>
-            <!-- 添加商品的提交按钮 -->
-            <el-button type="" @click="subFormBtn">添加商品</el-button>
+            <!-- 添加产品的提交按钮 -->
+            <el-button type="" @click="subFormBtn">添加产品</el-button>
           </el-tab-pane>
         </el-tabs>
       </el-form>
@@ -93,13 +93,13 @@ export default {
         attrs: []
       },
       goodsFormRules: {
-        goods_name: [{ required: true, message: '请输入商品名称', trigger: 'blur' }],
-        goods_price: [{ required: true, message: '请输入商品价格', trigger: 'blur' }],
-        goods_weight: [{ required: true, message: '请输入商品重量', trigger: 'blur' }],
-        goods_number: [{ required: true, message: '请输入商品数量', trigger: 'blur' }],
-        goods_cat: [{ required: true, message: '请选择商品分类', trigger: 'blur' }]
+        goods_name: [{ required: true, message: '请输入产品名称', trigger: 'blur' }],
+        goods_price: [{ required: true, message: '请输入产品价格', trigger: 'blur' }],
+        goods_weight: [{ required: true, message: '请输入产品重量', trigger: 'blur' }],
+        goods_number: [{ required: true, message: '请输入产品数量', trigger: 'blur' }],
+        goods_cat: [{ required: true, message: '请选择产品分类', trigger: 'blur' }]
       },
-      // 商品信息
+      // 产品信息
       cateList: [],
       cateProps: {
         label: 'cat_name',
@@ -158,7 +158,7 @@ export default {
     },
     beforeTabLeave(activeName, oldActiveName) {
       if (oldActiveName === '0' && this.goodsForm.goods_cat.length !== 3) {
-        this.$message.error('商品分类不能为空')
+        this.$message.error('产品分类不能为空')
         return false
       }
     },

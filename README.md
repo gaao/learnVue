@@ -4,7 +4,7 @@ githubPage 使用页面 主分支 merge 过来后，运行 build 打包，只需
 
 记录 vue 学习
 
-电商后台管理系统技术选型
+保险产品后台管理系统技术选型
 vue
 vue-router
 element-UI

@@ -2,7 +2,7 @@
   <div>
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>商品管理</el-breadcrumb-item>
+      <el-breadcrumb-item>产品管理</el-breadcrumb-item>
       <el-breadcrumb-item>参数列表</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card>
@@ -10,7 +10,7 @@
       </el-alert>
       <el-row>
         <el-col :span="3">
-          <span>选择商品分类：</span>
+          <span>选择产品分类：</span>
         </el-col>
         <el-col :span="9">
           <el-cascader v-model="selectCateKeys" :options="catelist" :props="cateProps" @change="handleCateChange"
@@ -303,7 +303,7 @@ export default {
     // 添加 tag
     showInput(row) {
       row.inputVisible = true
-      // 让输入框自动获取焦点 $nextTick是页面元素被重新渲染后
+      // 让输入框自动获取焦点 $nextTick 是页面元素被重新渲染后
       this.$nextTick(_ => {
         this.$refs.saveTagInput.$refs.input.focus()
       })
