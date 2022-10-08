@@ -4,7 +4,7 @@
     <el-header>
       <div>
         <img src="../assets/img/logo_white.png" alt="logo">
-        <span>后台管理系统</span>
+        <span>保险产品后台管理系统</span>
       </div>
       <el-button size="mini" type="info" @click="logout">退出</el-button>
     </el-header>
@@ -41,6 +41,8 @@
   </el-container>
 </template>
 <script>
+import _ from 'lodash'
+
 export default {
   data() {
     return {
@@ -68,8 +70,30 @@ export default {
     async getMenuList() {
       const { data: res } = await this.$http.get('menus')
       if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
-      this.menulist = res.data
-      console.log('menu', res)
+      // 深拷贝
+      const menu = _.cloneDeep(res.data)
+      console.log('menu', menu)
+      for (const key in menu) {
+        if (menu[key].authName === '商品管理') {
+          menu[key].authName = '产品管理'
+        }
+      }
+      for (let i = 0; i < menu.length; i++) {
+        menu[i].children.map((value, index) => {
+          if (value.authName === '商品列表') {
+            menu[i].children[index].authName = '产品列表'
+          } else if (value.authName === '商品分类') {
+            menu[i].children[index].authName = '产品分类'
+          }
+          console.log(121212, menu)
+          return menu
+        })
+      }
+
+      // 处理
+      this.menulist = menu
+      // this.menulist = res.data
+      console.log('menulist', this.menulist)
     },
     toggleCollapse() {
       this.isCollapse = !this.isCollapse
